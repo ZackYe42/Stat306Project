@@ -1,4 +1,5 @@
 install package
+
 ```{r}
 install.packages("ggplot2")
 install.packages("faraway")
@@ -6,4 +7,76 @@ install.packages("data.table")
 install.packages("rgl")
 install.packages("tourr")
 
+```
+load lbirary
+```{r}
+library(ggplot2)
+library(faraway)
+library(data.table)
+library(rgl)
+library(tourr)
+```
+load data
+```{r}
+ds <- read.csv("Mobile_train.csv",header = T)
+head(ds)
+```
+convert data
+Then all data use d as database
+```{r}
+d <- ds
+d$price_range[d$price_range < 2] <- 0
+d$price_range[d$price_range > 1] <- 1
+head(d)
+```
+Start PCA
+
+Make comp:
+```{r}
+comp_d <- princomp(d)
+comp_d
+summary(comp_d)
+
+```
+View contribution for each explain variables
+```{r}
+# The eigenvectors as columns in order from large to small
+# Each column is an eigenvector and corresponds to the
+# loadings used to transform the data
+comp_d$loadings
+
+# Coordinates of the individual observations on the principal
+# component axes
+comp_d$scores
+
+```
+See some plot
+```{r}
+# Plot the components to roughly see how well it worked
+plot(comp_d)
+
+# A biplot of the first two components and the original axes overlaid
+biplot(comp_d, pc.biplot = TRUE)
+```
+Standarized the data
+```{r}
+comp_std <- princomp(d, cor = TRUE)
+plot(comp_std)
+
+# Proportion of variation represented by each eigenvector
+(prbodyfat_std$sdev)^2 / sum(prbodyfat_std$sdev^2)
+```
+FInd the cutoff point
+```{r}
+screeplot(comp_std, type = "lines")
+#looks like 6 is change point
+```
+Reduce the explain variable
+```{r}
+comp_reduced <- comp_std$scores[, 1:6]
+```
+Fit logistic regression model
+```{r}
+glmModel <- glm(d$price_range~comp_reduced,family = binomial(link = "logit"))
+summary(glmModel)
 ```
