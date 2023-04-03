@@ -1,0 +1,9 @@
+install package
+```{r}
+install.packages("ggplot2")
+install.packages("faraway")
+install.packages("data.table")
+install.packages("rgl")
+install.packages("tourr")
+
+```
