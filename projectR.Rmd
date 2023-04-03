@@ -61,10 +61,11 @@ biplot(comp_d, pc.biplot = TRUE)
 Standarized the data
 ```{r}
 comp_std <- princomp(d, cor = TRUE)
+
 plot(comp_std)
 
 # Proportion of variation represented by each eigenvector
-(prbodyfat_std$sdev)^2 / sum(prbodyfat_std$sdev^2)
+(comp_std$sdev)^2 / sum(comp_std$sdev^2)
 ```
 FInd the cutoff point
 ```{r}
