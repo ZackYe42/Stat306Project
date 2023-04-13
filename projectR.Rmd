@@ -1,6 +1,6 @@
 ---
 title: 'STAT 306: Group Project'
-author: "Group "
+author: "Fangzhou Ye 72990732"
 output: pdf_document
 urlcolor: blue
 ---
